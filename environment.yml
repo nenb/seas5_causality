@@ -1,0 +1,20 @@
+name: seas5_causality
+channels:
+  - conda-forge
+dependencies:
+  # Required for full project functionality (dont remove)
+  - pytest
+  - python=3.8.5
+  - jupyterlab
+  - xarray
+  - numpy
+  - scipy
+  - dask
+  - netcdf4
+  - pandas
+  - matplotlib
+  - cartopy
+  - bottleneck
+  - ipywidgets
+  - ipympl
+  # extras
