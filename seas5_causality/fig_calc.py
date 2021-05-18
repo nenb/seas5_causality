@@ -103,6 +103,24 @@ def clim_plot_single(climate, early = False):
         plt.title('u 500hPa March Climatology Bias (2002 - 2017, ERA5 - SEAS5),' +
                   '\n' + 'March 1 initialisation', fontsize = 20)
         plt.savefig('../images/splot_late.png', bbox_inches = 'tight')
+        
+def h168_clim(lat_range = None, lon_range = None, day_range = None, year_range = None,
+               lon_shift = False):
+    '''Compute climatologies for u field in h168 experiment for November initialisation date'''
+    
+    u_h168_av = []
+    # Split latitude chunks in two (latitude size = 256) as SH not required.
+    h168_chunks = {"latitude":128, "time":30, "longitude":-1}
+    
+    fname = f'../data/raw/h168/*nc'
+    ds_all = xr.open_mfdataset(fname, combine = 'by_coords', parallel = True, 
+                               chunks = h168_chunks)
+    u = ds_all['u']
+    u_h168 = my_ds_wrapper(u)
+    u_h168_av.append(u_h168.compute_time_av(lats = lat_range, lons = lon_range,
+                                             days = day_range, years = year_range,
+                                             shift = lon_shift))
+    return u_h168_av
 
 def main():
     
